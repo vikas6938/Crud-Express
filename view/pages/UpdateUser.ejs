@@ -1,0 +1,141 @@
+<%- include('../partials/Header.ejs') -%>
+    <div class="d-flex justify-content-center v100 align-items-center my-5">
+        <div class="w-50 p-4 rounded-4" style="background-color: #e3f2fd;">
+            <form action="" method="post" class="w-100" onsubmit="return validateForm()">
+                <h4 class="text-light mb-3">Update User</h4>
+                <div class="mb-3">
+                    <input type="text" name="name" class="form-control" placeholder="NAME" id="name"
+                        value="<%= user.name %>">
+                    <div id="name-error" class="text-warning"></div>
+                </div>
+                <div class="mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="EMAIL" id="email"
+                        value="<%= user.email %>">
+                    <div id="email-error" class="text-warning"></div>
+                </div>
+                <div class="d-flex align-items-center form-control p-2">
+                    <label class="me-4">GENDER : </label>
+                    <div class="form-check me-4">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male"
+                            <%=user.gender==='Male' ? 'checked' : '' %>>
+                        <label class="form-check-label" for="male">
+                            MALE
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
+                            <%=user.gender==='Female' ? 'checked' : '' %>>
+                        <label class="form-check-label" for="female">
+                            FEMALE
+                        </label>
+                    </div>
+                </div>
+                <div id="gender-error" class="text-warning mb-3"></div>
+                <div class="mb-3">
+                    <select name="compony" class="form-select" id="compony">
+                        <option value="">--SELECT COMPONY--</option>
+                        <option value="Myntra" <%=user.compony==='Full Stack' ? 'selected' : '' %>>Myntra
+                        </option>
+                        <option value="Wipro" <%=user.compony==='Animation' ? 'selected' : '' %>>Wipro</option>
+                        <option value="Flifcart" <%=user.compony==='Graphic Designer' ? 'selected' : '' %>
+                            >Flifcart</option>
+                        <option value="Amazon" <%=user.compony==='Frontend Designer' ? 'selected' : '' %>
+                            >Amazon</option>
+                        <option value="Snapdeal" <%=user.compony==='Backend Developer' ? 'selected' : '' %>
+                            >Snapdeal</option>
+                    </select>
+                    <div id="compony-error" class="text-warning"></div>
+                </div>
+                <div class="form-control">
+                    <label class="d-block mb-3">SALARY:</label>
+                    <div class="row px-3">
+                        <% let userSalary=user.Salary %>
+                            <div class="col-lg-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Salary" id="Salary1"
+                                        value="10000" <%=userSalary.includes('10000') ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="Salary1">
+                                        10000
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Salary" id="Salary2"
+                                        value="50000" <%=userSalary.includes('50000') ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="Salary2">
+                                        50000
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Salary" id="Salary3"
+                                        value="45000" <%=userSalary.includes('45000') ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="Salary3">
+                                        45000
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Salary" id="Salary4"
+                                        value="35000" <%=userSalary.includes('35000') ? 'checked' : '' %>>
+                                    <label class="form-check-label" for="Salary4">
+                                        35000
+                                    </label>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div id="Salary-error" class="text-warning mb-3"></div>
+                <div class="mb-3">
+                    <textarea name="address" cols="30" rows="10" class="form-control" placeholder="ADDRESS"
+                        id="address"><%= user.address %></textarea>
+                    <div id="address-error" class="text-warning"></div>
+                </div>
+                <button type="submit" class="btn btn-outline-light">Update</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function validateForm() {
+            let isValid = true;
+            document.getElementById('name-error').innerText = '';
+            document.getElementById('email-error').innerText = '';
+            document.getElementById('gender-error').innerText = '';
+            document.getElementById('compony-error').innerText = '';
+            document.getElementById('Salary-error').innerText = '';
+            document.getElementById('address-error').innerText = '';
+
+            if (document.getElementById('name').value.trim() === "") {
+                document.getElementById('name-error').innerText = 'Name is required';
+                isValid = false;
+            }
+            if (document.getElementById('email').value.trim() === "") {
+                document.getElementById('email-error').innerText = 'Email is required';
+                isValid = false;
+            }
+            let genderSelected = document.querySelector('input[name="gender"]:checked');
+            if (!genderSelected) {
+                document.getElementById('gender-error').innerText = 'Please select a gender';
+                isValid = false;
+            }
+            if (document.getElementById('compony').value === "") {
+                document.getElementById('compony-error').innerText = 'Please select a compony';
+                isValid = false;
+            }
+            let SalarySelected = document.querySelectorAll('input[name="Salary"]:checked');
+            if (SalarySelected.length === 0) {
+                document.getElementById('Salary-error').innerText = 'Please select at least one Salary';
+                isValid = false;
+            }
+            if (document.getElementById('address').value.trim() === "") {
+                document.getElementById('address-error').innerText = 'Address is required';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+    </script>
+    <%- include('../partials/Footer.ejs') -%>
